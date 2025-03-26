@@ -1,0 +1,71 @@
+// warning.v
+module warning(
+    input wire clk,
+    input wire rst_n,
+    input wire [31:0] error_count,       // 错误次数
+    input wire start_count4,            // 触发LED4报警
+    input wire start_count5,            // 触发LED5报警
+    output reg led4,                    // LED4输出
+    output reg led5                     // LED5输出
+);
+
+    // 参数定义（根据实际时钟频率调整）
+    parameter COUNT_1S = 50_000_000 - 1;     // 50MHz时钟下1秒计数值
+    parameter COUNT_5S = 5 * (COUNT_1S + 1) - 1;
+    parameter COUNT_30S = 30 * (COUNT_1S + 1) - 1;
+    parameter FLASH_PERIOD = (COUNT_1S + 1) / 8 -1; // 125ms闪烁周期
+
+    // LED4控制逻辑
+    reg [31:0] counter4;
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            counter4 <= 0;
+            led4 <= 0;
+        end else if (start_count4) begin
+            if (error_count < 3) begin  // 1-2次错误：5秒快闪
+                if (counter4 < COUNT_5S) begin
+                    counter4 <= counter4 + 1;
+                    led4 <= (counter4 % FLASH_PERIOD < FLASH_PERIOD/2);
+                end else begin
+                    led4 <= 0;
+                end
+            end else if (error_count = 3) begin  // 3次错误：30秒快闪
+                if (counter4 < COUNT_30S) begin
+                    counter4 <= counter4 + 1;
+                    led4 <= (counter4 % FLASH_PERIOD < FLASH_PERIOD/2);
+                end else begin
+                    led4 <= 0;
+                end
+            end
+            end else if (error_count > 3) begin  // 大于3次错误常亮
+                led4 <= 1;
+            end
+        end else begin
+            counter4 <= 0;
+            led4 <= 0;
+        end
+    end
+
+    // LED5控制逻辑
+    reg [31:0] counter5;
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            counter5 <= 0;
+            led5 <= 0;
+        end else if (start_count5) begin  // 超时未操作报警
+            counter5 <= counter5 + 1;
+            if (counter5 < COUNT_30S) begin
+                led5 <= 0;
+            end else if (counter5 >= COUNT_30S && counter5 < 2 * COUNT_30S) begin
+                led5 <= (counter5 % FLASH_PERIOD < FLASH_PERIOD/2);
+            end else begin
+                counter5 <= 0;
+                led5 <= 0;
+            end
+        end else begin
+            counter5 <= 0;
+            led5 <= 0;
+        end
+    end
+
+endmodule

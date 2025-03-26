@@ -1,0 +1,9 @@
+module exp81(
+    input wire clk,           // 系统时钟
+    input wire rst_n,         // 复位信号，低电平有效
+    output reg [7:0] seg,     // 段选信号 (a,b,c,d,e,f,g,dp)
+    output reg [2:0] sel      // 位选信号，用于3-8译码器
+);
+
+
+endmodule

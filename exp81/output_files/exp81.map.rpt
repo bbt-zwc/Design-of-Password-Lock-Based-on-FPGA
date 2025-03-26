@@ -1,0 +1,617 @@
+Analysis & Synthesis report for exp81
+Thu Mar 06 22:12:43 2025
+Quartus II 64-Bit Version 13.1.0 Build 162 10/23/2013 SJ Full Version
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. State Machine - |exp81|KeyValue:key_inst|state
+  9. State Machine - |exp81|KeyValue:key_inst|KeyPress:u3|state
+ 10. State Machine - |exp81|KeyValue:key_inst|KeyPress:u2|state
+ 11. State Machine - |exp81|KeyValue:key_inst|KeyPress:u1|state
+ 12. State Machine - |exp81|KeyValue:key_inst|KeyPress:u0|state
+ 13. Registers Removed During Synthesis
+ 14. General Register Statistics
+ 15. Inverted Register Statistics
+ 16. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 17. Parameter Settings for User Entity Instance: warning:warning_inst
+ 18. Parameter Settings for Inferred Entity Instance: warning:warning_inst|lpm_divide:Mod0
+ 19. Parameter Settings for Inferred Entity Instance: warning:warning_inst|lpm_divide:Mod1
+ 20. Port Connectivity Checks: "KeyValue:key_inst"
+ 21. Elapsed Time Per Partition
+ 22. Analysis & Synthesis Messages
+ 23. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++----------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                     ;
++------------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Thu Mar 06 22:12:43 2025       ;
+; Quartus II 64-Bit Version          ; 13.1.0 Build 162 10/23/2013 SJ Full Version ;
+; Revision Name                      ; exp81                                       ;
+; Top-level Entity Name              ; exp81                                       ;
+; Family                             ; Cyclone III                                 ;
+; Total logic elements               ; 2,408                                       ;
+;     Total combinational functions  ; 2,332                                       ;
+;     Dedicated logic registers      ; 498                                         ;
+; Total registers                    ; 498                                         ;
+; Total pins                         ; 26                                          ;
+; Total virtual pins                 ; 0                                           ;
+; Total memory bits                  ; 0                                           ;
+; Embedded Multiplier 9-bit elements ; 0                                           ;
+; Total PLLs                         ; 0                                           ;
++------------------------------------+---------------------------------------------+
+
+
++----------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                        ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                                     ; Setting            ; Default Value      ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                                     ; EP3C40F780C8       ;                    ;
+; Top-level entity name                                                      ; exp81              ; exp81              ;
+; Family name                                                                ; Cyclone III        ; Cyclone IV GX      ;
+; Use smart compilation                                                      ; Off                ; Off                ;
+; Enable parallel Assembler and TimeQuest Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                                ; Off                ; Off                ;
+; Restructure Multiplexers                                                   ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                                        ; Off                ; Off                ;
+; Preserve fewer node names                                                  ; On                 ; On                 ;
+; Disable OpenCore Plus hardware evaluation                                  ; Off                ; Off                ;
+; Verilog Version                                                            ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                               ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                                   ; Auto               ; Auto               ;
+; Safe State Machine                                                         ; Off                ; Off                ;
+; Extract Verilog State Machines                                             ; On                 ; On                 ;
+; Extract VHDL State Machines                                                ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                          ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                                 ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                             ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                                    ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                                  ; On                 ; On                 ;
+; Parallel Synthesis                                                         ; On                 ; On                 ;
+; DSP Block Balancing                                                        ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                                         ; On                 ; On                 ;
+; Power-Up Don't Care                                                        ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                               ; Off                ; Off                ;
+; Remove Duplicate Registers                                                 ; On                 ; On                 ;
+; Ignore CARRY Buffers                                                       ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                                     ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                                      ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                                  ; Off                ; Off                ;
+; Ignore LCELL Buffers                                                       ; Off                ; Off                ;
+; Ignore SOFT Buffers                                                        ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                             ; Off                ; Off                ;
+; Optimization Technique                                                     ; Balanced           ; Balanced           ;
+; Carry Chain Length                                                         ; 70                 ; 70                 ;
+; Auto Carry Chains                                                          ; On                 ; On                 ;
+; Auto Open-Drain Pins                                                       ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                                      ; Off                ; Off                ;
+; Auto ROM Replacement                                                       ; On                 ; On                 ;
+; Auto RAM Replacement                                                       ; On                 ; On                 ;
+; Auto DSP Block Replacement                                                 ; On                 ; On                 ;
+; Auto Shift Register Replacement                                            ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                            ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                              ; On                 ; On                 ;
+; Strict RAM Replacement                                                     ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                          ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                                     ; Off                ; Off                ;
+; Auto RAM Block Balancing                                                   ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                          ; Off                ; Off                ;
+; Auto Resource Sharing                                                      ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                                         ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                              ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing                        ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                          ; Off                ; Off                ;
+; Timing-Driven Synthesis                                                    ; On                 ; On                 ;
+; Report Parameter Settings                                                  ; On                 ; On                 ;
+; Report Source Assignments                                                  ; On                 ; On                 ;
+; Report Connectivity Checks                                                 ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                                         ; Off                ; Off                ;
+; Synchronization Register Chain Length                                      ; 2                  ; 2                  ;
+; PowerPlay Power Optimization                                               ; Normal compilation ; Normal compilation ;
+; HDL message level                                                          ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                            ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report                   ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report                         ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report                  ; 100                ; 100                ;
+; Clock MUX Protection                                                       ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                                ; Off                ; Off                ;
+; Block Design Naming                                                        ; Auto               ; Auto               ;
+; SDC constraint protection                                                  ; Off                ; Off                ;
+; Synthesis Effort                                                           ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal               ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                                       ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                                         ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                                ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                                     ; On                 ; On                 ;
+; Synthesis Seed                                                             ; 1                  ; 1                  ;
++----------------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 16          ;
+; Maximum allowed            ; 10          ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 8           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processors 2-8         ; < 0.1%      ;
+;     Processors 9-16        ;   0.0%      ;
++----------------------------+-------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                           ;
++----------------------------------+-----------------+------------------------------+--------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                       ; Library ;
++----------------------------------+-----------------+------------------------------+--------------------------------------------------------------------+---------+
+; jzjp2.v                          ; yes             ; User Verilog HDL File        ; D:/altera/exp8/exp81/jzjp2.v                                       ;         ;
+; smg.v                            ; yes             ; User Verilog HDL File        ; D:/altera/exp8/exp81/smg.v                                         ;         ;
+; exp81.v                          ; yes             ; User Verilog HDL File        ; D:/altera/exp8/exp81/exp81.v                                       ;         ;
+; jzjp.v                           ; yes             ; User Verilog HDL File        ; D:/altera/exp8/exp81/jzjp.v                                        ;         ;
+; mms.v                            ; yes             ; User Verilog HDL File        ; D:/altera/exp8/exp81/mms.v                                         ;         ;
+; warning.v                        ; yes             ; User Verilog HDL File        ; D:/altera/exp8/exp81/warning.v                                     ;         ;
+; lpm_divide.tdf                   ; yes             ; Megafunction                 ; d:/altera/13.1/quartus/libraries/megafunctions/lpm_divide.tdf      ;         ;
+; abs_divider.inc                  ; yes             ; Megafunction                 ; d:/altera/13.1/quartus/libraries/megafunctions/abs_divider.inc     ;         ;
+; sign_div_unsign.inc              ; yes             ; Megafunction                 ; d:/altera/13.1/quartus/libraries/megafunctions/sign_div_unsign.inc ;         ;
+; aglobal131.inc                   ; yes             ; Megafunction                 ; d:/altera/13.1/quartus/libraries/megafunctions/aglobal131.inc      ;         ;
+; db/lpm_divide_bbm.tdf            ; yes             ; Auto-Generated Megafunction  ; D:/altera/exp8/exp81/db/lpm_divide_bbm.tdf                         ;         ;
+; db/sign_div_unsign_bnh.tdf       ; yes             ; Auto-Generated Megafunction  ; D:/altera/exp8/exp81/db/sign_div_unsign_bnh.tdf                    ;         ;
+; db/alt_u_div_u8f.tdf             ; yes             ; Auto-Generated Megafunction  ; D:/altera/exp8/exp81/db/alt_u_div_u8f.tdf                          ;         ;
+; db/add_sub_unc.tdf               ; yes             ; Auto-Generated Megafunction  ; D:/altera/exp8/exp81/db/add_sub_unc.tdf                            ;         ;
+; db/add_sub_vnc.tdf               ; yes             ; Auto-Generated Megafunction  ; D:/altera/exp8/exp81/db/add_sub_vnc.tdf                            ;         ;
++----------------------------------+-----------------+------------------------------+--------------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimated Total logic elements              ; 2,408     ;
+;                                             ;           ;
+; Total combinational functions               ; 2332      ;
+; Logic element usage by number of LUT inputs ;           ;
+;     -- 4 input functions                    ; 892       ;
+;     -- 3 input functions                    ; 501       ;
+;     -- <=2 input functions                  ; 939       ;
+;                                             ;           ;
+; Logic elements by mode                      ;           ;
+;     -- normal mode                          ; 1604      ;
+;     -- arithmetic mode                      ; 728       ;
+;                                             ;           ;
+; Total registers                             ; 498       ;
+;     -- Dedicated logic registers            ; 498       ;
+;     -- I/O registers                        ; 0         ;
+;                                             ;           ;
+; I/O pins                                    ; 26        ;
+; Embedded Multiplier 9-bit elements          ; 0         ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 492       ;
+; Total fan-out                               ; 8769      ;
+; Average fan-out                             ; 3.04      ;
++---------------------------------------------+-----------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                ;
++-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------+--------------+
+; Compilation Hierarchy Node                ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                         ; Library Name ;
++-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------+--------------+
+; |exp81                                    ; 2332 (0)          ; 498 (0)      ; 0           ; 0            ; 0       ; 0         ; 26   ; 0            ; |exp81                                                                                                                      ; work         ;
+;    |KeyValue:key_inst|                    ; 203 (31)          ; 139 (19)     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|KeyValue:key_inst                                                                                                    ; work         ;
+;       |KeyPress:u0|                       ; 43 (43)           ; 30 (30)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|KeyValue:key_inst|KeyPress:u0                                                                                        ; work         ;
+;       |KeyPress:u1|                       ; 43 (43)           ; 30 (30)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|KeyValue:key_inst|KeyPress:u1                                                                                        ; work         ;
+;       |KeyPress:u2|                       ; 43 (43)           ; 30 (30)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|KeyValue:key_inst|KeyPress:u2                                                                                        ; work         ;
+;       |KeyPress:u3|                       ; 43 (43)           ; 30 (30)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|KeyValue:key_inst|KeyPress:u3                                                                                        ; work         ;
+;    |mm_lock:mm_lock_inst|                 ; 557 (557)         ; 217 (217)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|mm_lock:mm_lock_inst                                                                                                 ; work         ;
+;    |smg_display:smg_inst|                 ; 35 (35)           ; 43 (43)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|smg_display:smg_inst                                                                                                 ; work         ;
+;    |warning:warning_inst|                 ; 1537 (206)        ; 99 (99)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst                                                                                                 ; work         ;
+;       |lpm_divide:Mod0|                   ; 667 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod0                                                                                 ; work         ;
+;          |lpm_divide_bbm:auto_generated|  ; 667 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod0|lpm_divide_bbm:auto_generated                                                   ; work         ;
+;             |sign_div_unsign_bnh:divider| ; 667 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod0|lpm_divide_bbm:auto_generated|sign_div_unsign_bnh:divider                       ; work         ;
+;                |alt_u_div_u8f:divider|    ; 667 (667)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod0|lpm_divide_bbm:auto_generated|sign_div_unsign_bnh:divider|alt_u_div_u8f:divider ; work         ;
+;       |lpm_divide:Mod1|                   ; 664 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod1                                                                                 ; work         ;
+;          |lpm_divide_bbm:auto_generated|  ; 664 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod1|lpm_divide_bbm:auto_generated                                                   ; work         ;
+;             |sign_div_unsign_bnh:divider| ; 664 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod1|lpm_divide_bbm:auto_generated|sign_div_unsign_bnh:divider                       ; work         ;
+;                |alt_u_div_u8f:divider|    ; 664 (664)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |exp81|warning:warning_inst|lpm_divide:Mod1|lpm_divide_bbm:auto_generated|sign_div_unsign_bnh:divider|alt_u_div_u8f:divider ; work         ;
++-------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++---------------------------------------------------------------------------------------------------+
+; State Machine - |exp81|KeyValue:key_inst|state                                                    ;
++-----------------+----------------+-----------------+---------------+---------------+--------------+
+; Name            ; state.ROW_FOUR ; state.ROW_THREE ; state.ROW_TWO ; state.ROW_ONE ; state.NO_KEY ;
++-----------------+----------------+-----------------+---------------+---------------+--------------+
+; state.NO_KEY    ; 0              ; 0               ; 0             ; 0             ; 0            ;
+; state.ROW_ONE   ; 0              ; 0               ; 0             ; 1             ; 1            ;
+; state.ROW_TWO   ; 0              ; 0               ; 1             ; 0             ; 1            ;
+; state.ROW_THREE ; 0              ; 1               ; 0             ; 0             ; 1            ;
+; state.ROW_FOUR  ; 1              ; 0               ; 0             ; 0             ; 1            ;
++-----------------+----------------+-----------------+---------------+---------------+--------------+
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------+
+; State Machine - |exp81|KeyValue:key_inst|KeyPress:u3|state                                         ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; Name                 ; state.Filter_Down2Up ; state.Key_down ; state.Filter_Up2Down ; state.Key_up ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; state.Key_up         ; 0                    ; 0              ; 0                    ; 0            ;
+; state.Filter_Up2Down ; 0                    ; 0              ; 1                    ; 1            ;
+; state.Key_down       ; 0                    ; 1              ; 0                    ; 1            ;
+; state.Filter_Down2Up ; 1                    ; 0              ; 0                    ; 1            ;
++----------------------+----------------------+----------------+----------------------+--------------+
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------+
+; State Machine - |exp81|KeyValue:key_inst|KeyPress:u2|state                                         ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; Name                 ; state.Filter_Down2Up ; state.Key_down ; state.Filter_Up2Down ; state.Key_up ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; state.Key_up         ; 0                    ; 0              ; 0                    ; 0            ;
+; state.Filter_Up2Down ; 0                    ; 0              ; 1                    ; 1            ;
+; state.Key_down       ; 0                    ; 1              ; 0                    ; 1            ;
+; state.Filter_Down2Up ; 1                    ; 0              ; 0                    ; 1            ;
++----------------------+----------------------+----------------+----------------------+--------------+
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------+
+; State Machine - |exp81|KeyValue:key_inst|KeyPress:u1|state                                         ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; Name                 ; state.Filter_Down2Up ; state.Key_down ; state.Filter_Up2Down ; state.Key_up ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; state.Key_up         ; 0                    ; 0              ; 0                    ; 0            ;
+; state.Filter_Up2Down ; 0                    ; 0              ; 1                    ; 1            ;
+; state.Key_down       ; 0                    ; 1              ; 0                    ; 1            ;
+; state.Filter_Down2Up ; 1                    ; 0              ; 0                    ; 1            ;
++----------------------+----------------------+----------------+----------------------+--------------+
+
+
+Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------+
+; State Machine - |exp81|KeyValue:key_inst|KeyPress:u0|state                                         ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; Name                 ; state.Filter_Down2Up ; state.Key_down ; state.Filter_Up2Down ; state.Key_up ;
++----------------------+----------------------+----------------+----------------------+--------------+
+; state.Key_up         ; 0                    ; 0              ; 0                    ; 0            ;
+; state.Filter_Up2Down ; 0                    ; 0              ; 1                    ; 1            ;
+; state.Key_down       ; 0                    ; 1              ; 0                    ; 1            ;
+; state.Filter_Down2Up ; 1                    ; 0              ; 0                    ; 1            ;
++----------------------+----------------------+----------------+----------------------+--------------+
+
+
++------------------------------------------------------------+
+; Registers Removed During Synthesis                         ;
++---------------------------------------+--------------------+
+; Register name                         ; Reason for Removal ;
++---------------------------------------+--------------------+
+; smg_display:smg_inst|div_cnt[5..7]    ; Lost fanout        ;
+; Total Number of Removed Registers = 3 ;                    ;
++---------------------------------------+--------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 498   ;
+; Number of registers using Synchronous Clear  ; 200   ;
+; Number of registers using Synchronous Load   ; 5     ;
+; Number of registers using Asynchronous Clear ; 459   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 164   ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++---------------------------------------------------+
+; Inverted Register Statistics                      ;
++-----------------------------------------+---------+
+; Inverted Register                       ; Fan out ;
++-----------------------------------------+---------+
+; smg_display:smg_inst|display_data[6][0] ; 1       ;
+; smg_display:smg_inst|display_data[5][0] ; 1       ;
+; smg_display:smg_inst|display_data[4][0] ; 1       ;
+; smg_display:smg_inst|display_data[7][0] ; 1       ;
+; smg_display:smg_inst|display_data[2][0] ; 1       ;
+; smg_display:smg_inst|display_data[1][0] ; 1       ;
+; smg_display:smg_inst|display_data[0][0] ; 1       ;
+; smg_display:smg_inst|display_data[3][0] ; 1       ;
+; smg_display:smg_inst|display_data[5][1] ; 1       ;
+; smg_display:smg_inst|display_data[6][1] ; 1       ;
+; smg_display:smg_inst|display_data[4][1] ; 1       ;
+; smg_display:smg_inst|display_data[7][1] ; 1       ;
+; smg_display:smg_inst|display_data[2][1] ; 1       ;
+; smg_display:smg_inst|display_data[1][1] ; 1       ;
+; smg_display:smg_inst|display_data[0][1] ; 1       ;
+; smg_display:smg_inst|display_data[3][1] ; 1       ;
+; smg_display:smg_inst|display_data[5][2] ; 1       ;
+; smg_display:smg_inst|display_data[6][2] ; 1       ;
+; smg_display:smg_inst|display_data[4][2] ; 1       ;
+; smg_display:smg_inst|display_data[7][2] ; 1       ;
+; smg_display:smg_inst|display_data[2][2] ; 1       ;
+; smg_display:smg_inst|display_data[1][2] ; 1       ;
+; smg_display:smg_inst|display_data[0][2] ; 1       ;
+; smg_display:smg_inst|display_data[3][2] ; 1       ;
+; smg_display:smg_inst|display_data[5][3] ; 1       ;
+; smg_display:smg_inst|display_data[6][3] ; 1       ;
+; smg_display:smg_inst|display_data[4][3] ; 1       ;
+; smg_display:smg_inst|display_data[7][3] ; 1       ;
+; smg_display:smg_inst|display_data[2][3] ; 1       ;
+; smg_display:smg_inst|display_data[1][3] ; 1       ;
+; smg_display:smg_inst|display_data[0][3] ; 1       ;
+; smg_display:smg_inst|display_data[3][3] ; 1       ;
+; smg_display:smg_inst|sel[0]             ; 1       ;
+; mm_lock:mm_lock_inst|display_num[4]     ; 4       ;
+; mm_lock:mm_lock_inst|display_num[8]     ; 4       ;
+; mm_lock:mm_lock_inst|display_num[12]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[0]     ; 4       ;
+; mm_lock:mm_lock_inst|display_num[20]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[24]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[28]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[16]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[9]     ; 3       ;
+; mm_lock:mm_lock_inst|display_num[5]     ; 3       ;
+; mm_lock:mm_lock_inst|display_num[13]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[1]     ; 3       ;
+; mm_lock:mm_lock_inst|display_num[21]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[25]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[29]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[17]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[10]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[6]     ; 4       ;
+; mm_lock:mm_lock_inst|display_num[14]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[2]     ; 4       ;
+; mm_lock:mm_lock_inst|display_num[22]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[26]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[30]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[18]    ; 4       ;
+; mm_lock:mm_lock_inst|display_num[11]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[7]     ; 3       ;
+; mm_lock:mm_lock_inst|display_num[15]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[3]     ; 3       ;
+; mm_lock:mm_lock_inst|display_num[23]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[27]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[31]    ; 3       ;
+; mm_lock:mm_lock_inst|display_num[19]    ; 3       ;
+; mm_lock:mm_lock_inst|password[3]        ; 2       ;
+; mm_lock:mm_lock_inst|password[4]        ; 2       ;
+; mm_lock:mm_lock_inst|password[5]        ; 2       ;
+; mm_lock:mm_lock_inst|password[6]        ; 2       ;
+; mm_lock:mm_lock_inst|password[9]        ; 2       ;
+; mm_lock:mm_lock_inst|password[10]       ; 2       ;
+; mm_lock:mm_lock_inst|password[12]       ; 2       ;
+; mm_lock:mm_lock_inst|password[14]       ; 2       ;
+; mm_lock:mm_lock_inst|password[18]       ; 2       ;
+; mm_lock:mm_lock_inst|password[20]       ; 2       ;
+; mm_lock:mm_lock_inst|password[21]       ; 2       ;
+; mm_lock:mm_lock_inst|password[25]       ; 2       ;
+; mm_lock:mm_lock_inst|password[28]       ; 2       ;
+; KeyValue:key_inst|KeyPress:u3|KEY_STATE ; 4       ;
+; KeyValue:key_inst|KeyPress:u1|KEY_STATE ; 3       ;
+; KeyValue:key_inst|KeyPress:u2|KEY_STATE ; 4       ;
+; KeyValue:key_inst|KeyPress:u0|KEY_STATE ; 2       ;
+; Total number of inverted registers = 82 ;         ;
++-----------------------------------------+---------+
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
+; 4:1                ; 29 bits   ; 58 LEs        ; 29 LEs               ; 29 LEs                 ; Yes        ; |exp81|mm_lock:mm_lock_inst|idle_timer[24]    ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |exp81|warning:warning_inst|counter5[30]      ;
+; 16:1               ; 2 bits    ; 20 LEs        ; 4 LEs                ; 16 LEs                 ; Yes        ; |exp81|KeyValue:key_inst|colIndex[0]          ;
+; 21:1               ; 32 bits   ; 448 LEs       ; 64 LEs               ; 384 LEs                ; Yes        ; |exp81|mm_lock:mm_lock_inst|temp_password[26] ;
+; 7:1                ; 32 bits   ; 128 LEs       ; 32 LEs               ; 96 LEs                 ; Yes        ; |exp81|warning:warning_inst|counter4[18]      ;
+; 12:1               ; 3 bits    ; 24 LEs        ; 6 LEs                ; 18 LEs                 ; Yes        ; |exp81|mm_lock:mm_lock_inst|input_count[1]    ;
+; 14:1               ; 32 bits   ; 288 LEs       ; 128 LEs              ; 160 LEs                ; Yes        ; |exp81|mm_lock:mm_lock_inst|display_num[21]   ;
+; 8:1                ; 4 bits    ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; No         ; |exp81|smg_display:smg_inst|Mux1              ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------+
+
+
++-------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: warning:warning_inst ;
++----------------+------------+-------------------------------------+
+; Parameter Name ; Value      ; Type                                ;
++----------------+------------+-------------------------------------+
+; COUNT_1S       ; 49999999   ; Signed Integer                      ;
+; COUNT_5S       ; 249999999  ; Signed Integer                      ;
+; COUNT_30S      ; 1499999999 ; Signed Integer                      ;
+; FLASH_PERIOD   ; 6249999    ; Signed Integer                      ;
++----------------+------------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: warning:warning_inst|lpm_divide:Mod0 ;
++------------------------+----------------+---------------------------------------------+
+; Parameter Name         ; Value          ; Type                                        ;
++------------------------+----------------+---------------------------------------------+
+; LPM_WIDTHN             ; 32             ; Untyped                                     ;
+; LPM_WIDTHD             ; 23             ; Untyped                                     ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                     ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                     ;
+; LPM_PIPELINE           ; 0              ; Untyped                                     ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                     ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                     ;
+; CBXI_PARAMETER         ; lpm_divide_bbm ; Untyped                                     ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                     ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                     ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                  ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                              ;
++------------------------+----------------+---------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: warning:warning_inst|lpm_divide:Mod1 ;
++------------------------+----------------+---------------------------------------------+
+; Parameter Name         ; Value          ; Type                                        ;
++------------------------+----------------+---------------------------------------------+
+; LPM_WIDTHN             ; 32             ; Untyped                                     ;
+; LPM_WIDTHD             ; 23             ; Untyped                                     ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                     ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                     ;
+; LPM_PIPELINE           ; 0              ; Untyped                                     ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                     ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                     ;
+; CBXI_PARAMETER         ; lpm_divide_bbm ; Untyped                                     ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                     ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                     ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                  ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                              ;
++------------------------+----------------+---------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "KeyValue:key_inst"                                                                                             ;
++------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; Port       ; Type   ; Severity ; Details                                                                                                  ;
++------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+; KEY_Value1 ; Output ; Warning  ; Declared by entity but not connected by instance. Logic that only feeds a dangling port will be removed. ;
++------------+--------+----------+----------------------------------------------------------------------------------------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:02     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus II 64-Bit Analysis & Synthesis
+    Info: Version 13.1.0 Build 162 10/23/2013 SJ Full Version
+    Info: Processing started: Thu Mar 06 22:12:39 2025
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off exp81 -c exp81
+Info (11104): Parallel Compilation has detected 16 hyper-threaded processors. However, the extra hyper-threaded processors will not be used by default. Parallel Compilation will use 10 of the 10 physical processors detected instead.
+Info (12021): Found 1 design units, including 1 entities, in source file sim/test.v
+    Info (12023): Found entity 1: test
+Info (12021): Found 1 design units, including 1 entities, in source file jzjp2.v
+    Info (12023): Found entity 1: KeyPress
+Info (12021): Found 1 design units, including 1 entities, in source file smg.v
+    Info (12023): Found entity 1: smg_display
+Info (12021): Found 1 design units, including 1 entities, in source file exp81.v
+    Info (12023): Found entity 1: exp81
+Info (12021): Found 1 design units, including 1 entities, in source file jzjp.v
+    Info (12023): Found entity 1: KeyValue
+Info (12021): Found 1 design units, including 1 entities, in source file mms.v
+    Info (12023): Found entity 1: mm_lock
+Info (12021): Found 1 design units, including 1 entities, in source file warning.v
+    Info (12023): Found entity 1: warning
+Info (12127): Elaborating entity "exp81" for the top level hierarchy
+Info (12128): Elaborating entity "KeyValue" for hierarchy "KeyValue:key_inst"
+Warning (10230): Verilog HDL assignment warning at jzjp.v(100): truncated value with size 4 to match size of target (2)
+Warning (10230): Verilog HDL assignment warning at jzjp.v(112): truncated value with size 4 to match size of target (2)
+Warning (10230): Verilog HDL assignment warning at jzjp.v(124): truncated value with size 4 to match size of target (2)
+Warning (10230): Verilog HDL assignment warning at jzjp.v(135): truncated value with size 4 to match size of target (2)
+Warning (10230): Verilog HDL assignment warning at jzjp.v(161): truncated value with size 32 to match size of target (4)
+Info (12128): Elaborating entity "KeyPress" for hierarchy "KeyValue:key_inst|KeyPress:u0"
+Info (12128): Elaborating entity "smg_display" for hierarchy "smg_display:smg_inst"
+Info (12128): Elaborating entity "mm_lock" for hierarchy "mm_lock:mm_lock_inst"
+Warning (10230): Verilog HDL assignment warning at mms.v(60): truncated value with size 32 to match size of target (29)
+Warning (10230): Verilog HDL assignment warning at mms.v(76): truncated value with size 32 to match size of target (27)
+Warning (10230): Verilog HDL assignment warning at mms.v(91): truncated value with size 32 to match size of target (4)
+Warning (10230): Verilog HDL assignment warning at mms.v(161): truncated value with size 32 to match size of target (25)
+Info (12128): Elaborating entity "warning" for hierarchy "warning:warning_inst"
+Warning (10762): Verilog HDL Case Statement warning at warning.v(44): can't check case statement for completeness because the case expression has too many possible states
+Info (278001): Inferred 2 megafunctions from design logic
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "warning:warning_inst|Mod0"
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "warning:warning_inst|Mod1"
+Info (12130): Elaborated megafunction instantiation "warning:warning_inst|lpm_divide:Mod0"
+Info (12133): Instantiated megafunction "warning:warning_inst|lpm_divide:Mod0" with the following parameter:
+    Info (12134): Parameter "LPM_WIDTHN" = "32"
+    Info (12134): Parameter "LPM_WIDTHD" = "23"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_bbm.tdf
+    Info (12023): Found entity 1: lpm_divide_bbm
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_bnh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_bnh
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_u8f.tdf
+    Info (12023): Found entity 1: alt_u_div_u8f
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_unc.tdf
+    Info (12023): Found entity 1: add_sub_unc
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_vnc.tdf
+    Info (12023): Found entity 1: add_sub_vnc
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Info (13000): Registers with preset signals will power-up high
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "seg[7]" is stuck at GND
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 3 registers lost all their fanouts during netlist optimizations.
+Info (144001): Generated suppressed messages file D:/altera/exp8/exp81/output_files/exp81.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 2472 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 6 input pins
+    Info (21059): Implemented 20 output pins
+    Info (21061): Implemented 2446 logic cells
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 13 warnings
+    Info: Peak virtual memory: 4697 megabytes
+    Info: Processing ended: Thu Mar 06 22:12:43 2025
+    Info: Elapsed time: 00:00:04
+    Info: Total CPU time (on all processors): 00:00:03
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in D:/altera/exp8/exp81/output_files/exp81.map.smsg.
+
+

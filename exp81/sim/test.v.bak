@@ -1,0 +1,80 @@
+`timescale 1ns / 1ps
+
+module test;
+
+    // 输入信号（需要驱动，定义为 reg）
+    reg clk;
+    reg rst_n;
+    reg [3:0] key_in;
+
+    // 输出信号（从模块读取，定义为 wire）
+    wire [3:0] key_out;
+    wire [7:0] display_num;
+    wire [2:0] sel;
+    wire led1, led2, led3, led4, led5;
+    wire [31:0] count4;
+
+    // 实例化被测试模块
+    exp81 uut (
+        .clk(clk),
+        .rst_n(rst_n),
+        .key_in(key_in),
+        .key_out(key_out),
+        .seg(display_num),
+        .sel(sel),
+        .led1(led1),
+        .led2(led2),
+        .led3(led3),
+        .led4(led4),
+        .led5(led5),
+        .count4(count4)
+    );
+
+    // 生成 100MHz 时钟（周期 10ns）
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    // 测试逻辑
+    initial begin
+        // 初始化
+        rst_n = 0;       // 复位
+        key_in = 4'h0;   // 初始化按键输入
+        #20;
+        rst_n = 1;       // 释放复位
+
+        // 模拟 5 次错误密码输入
+        repeat (5) begin
+            // 输入密码 12345678
+            send_key(4'h1);  // 1
+            send_key(4'h2);  // 2
+            send_key(4'h3);  // 3
+            send_key(4'h4);  // 4
+            send_key(4'h5);  // 5
+            send_key(4'h6);  // 6
+            send_key(4'h7);  // 7
+            send_key(4'h8);  // 8
+            send_key(4'hA);  // 按 A 确认（错误密码）
+        end
+
+        // 等待 200ns 观察 count4 变化
+        #200;
+        $finish;
+    end
+
+    // 自动发送按键任务
+    task send_key;
+        input [3:0] key;
+        begin
+            key_in = key;
+            #10;        // 保持 10ns
+        end
+    endtask
+
+    // 实时监视关键信号
+    initial begin
+        $monitor("Time=%0t: key=0x%h, count4=%0d", $time, key_in, count4);
+    end
+
+endmodule

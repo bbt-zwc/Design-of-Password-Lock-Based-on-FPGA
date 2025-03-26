@@ -1,0 +1,3 @@
+Warning (10268): Verilog HDL information at jzjp.v(155): always construct contains both blocking and non-blocking assignments
+Warning (10268): Verilog HDL information at mms.v(43): always construct contains both blocking and non-blocking assignments
+Info (10281): Verilog HDL Declaration information at mms.v(38): object "idle_timeout" differs only in case from object "IDLE_TIMEOUT" in the same scope

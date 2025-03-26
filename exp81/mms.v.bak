@@ -1,0 +1,222 @@
+module mm_lock(
+    input wire clk,           // 系统时钟
+    input wire rst_n,         // 复位信号
+    input wire [3:0] key_in,  // 按键输入
+    output wire [3:0] key_out,// 按键输出
+    output wire [7:0] seg,    // 显示信号
+    output wire [2:0] sel,    // 选择信号
+    output wire led1,         // 状态LED1
+    output wire led2,         // 状态LED2
+    output wire led3,         // 状态LED3
+    output reg led4,     // LED4输出
+    output reg led5     // LED5输出
+);
+
+// 关键值信号
+wire [3:0] key_value;       // 按键值
+wire key_valid;             // 按键有效信号
+
+// 显示相关信号
+reg [31:0] display_num = 32'hFFFFFFFF; // 初始化显示--------
+reg [3:0] input_count = 0;             // 输入计数
+reg current_state;                      // 当前状态
+localparam LOCKED = 1'b0;              // 锁定状态
+localparam UNLOCKED = 1'b1;            // 解锁状态
+reg [31:0] password = 32'h12345678;                  // 密码存储
+reg change_password_mode;               // 修改密码模式标志
+reg [31:0] error_count;   // 添加错误次数输出
+
+// 定义计数的最大值
+parameter COUNT_20NS = 1; // 20ns计数
+parameter COUNT_1S = 50000000 - 1; // 1秒计数 (1s / 20ns = 50000000)
+parameter COUNT_5S = 250000000 - 1; // 5秒计数 (5s / 20ns = 250000000)
+parameter COUNT_10S = 500000000 - 1; // 10秒计数 (10s / 20ns = 500000000)
+parameter COUNT_30S = 1500000000 - 1; // 30秒计数 (30s / 20ns = 1500000000)
+// 定义闪烁周期
+parameter FLASH_PERIOD1 = 6250000 - 1; // 125ms闪烁周期
+parameter FLASH_PERIOD2 = 6250000 - 1; // 125ms闪烁周期
+
+reg [31:0] counter4; // LED4计数器
+reg [31:0] counter5; // LED5计数器
+reg [31:0] counter41; // LED4闪烁计数器
+reg [31:0] counter51; // LED5闪烁计数器
+reg [5:0] count5 = 0;   // LED5计数器控制状态
+reg [1:0] count4 = 0;   // LED4计数器控制状态
+
+// 实例化按键扫描模块
+KeyValue key_inst(
+    .CLK(clk),
+    .nRST(rst_n),
+    .KEY_COL(key_in),      // 按键列
+    .KEY_ROW(key_out),     // 按键行
+    .KEY_Value(key_value),  // 按键值
+    .Value_en(key_valid)    // 按键有效信号
+);
+
+// 实例化数码管显示模块
+smg_display smg_inst(
+    .clk(clk),
+    .rst_n(rst_n),
+    .number(display_num),
+    .seg(seg),
+    .sel(sel)
+);
+
+// 状态机逻辑
+always @(posedge clk or negedge rst_n) begin
+    if(!rst_n) begin
+        display_num <= 32'hFFFFFFFF; // 清空显示
+        input_count <= 0;            // 清空输入计数
+        current_state <= LOCKED;   // 初始化状态为锁定
+        change_password_mode <= 1'b0; // 默认不在修改密码模式
+        error_count <= 31'h0; // 初始化错误次数
+    end else if(key_valid) begin
+        case(key_value)
+            4'h0, 4'h1, 4'h2, 4'h3, 4'h4, 4'h5, 4'h6, 4'h7, 4'h8, 4'h9: begin
+                if(input_count < 8) begin
+                    update_display(key_value); // 更新显示
+                end
+                if(current_state == LOCKED) begin
+                    if(count5 == 0) begin
+                        led5 <= 0;
+                        counter5 <= 0; // 重置LED5计数器
+                        counter51 <= 0; // 重置LED5闪烁计数器
+                        count5 <= 1;   // 开始计数LED5
+                    end
+                end
+            end
+            4'hA: begin // A键确认输入
+                if(current_state == LOCKED) begin
+                    if(display_num == password) begin
+                        current_state <= UNLOCKED; // 解锁成功
+                        display_num <= 32'hFFFFFFFF; // 清空显示
+                        led4 <= 0; // 熄灭LED4
+                        counter4 <= 0; // 重置LED4计数器
+                        counter41 <= 0; // 重置LED4闪烁计数器
+                        count4 <= 0;   // 停止计数LED4
+                        led5 <= 0; // 熄灭LED5
+                        counter5 <= 0; // 重置LED5计数器
+                        counter51 <= 0; // 重置LED5闪烁计数器
+                        count5 <= 0;   // 停止计数LED5
+                        error_count <= 31'h0; // 重置错误次数
+                    end else begin
+                        // 输入错误，重置状态
+                        input_count = 0;            // 清空输入计数
+                        display_num = 32'hFFFFFFFF; // 清空显示
+                        led4 = 1; // 点亮LED4
+                        counter4 = 0; // 重置LED4计数器
+                        counter41 = 0; // 重置LED4闪烁计数器
+                        count4 = 1;   // 开始计数LED4
+                        error_count = error_count + 31'h1;
+                        display_num = error_count;
+                    end
+                end
+                else if(change_password_mode == 1'b1 && current_state == UNLOCKED) begin
+                    password = display_num;
+                    input_count <= 0;            // 清空输入计数
+                    display_num <= 32'hFFFFFFFF; // 清空显示 
+                    change_password_mode <= 1'b0; // 退出修改密码模式
+                end
+            end
+            4'hB: begin // B键锁定
+                current_state <= LOCKED; // 锁定
+                display_num <= 32'hFFFFFFFF; // 清空显示
+                input_count <= 0;            // 清空输入计数
+            end
+            4'hC: begin // C键清空
+                display_num <= 32'hFFFFFFFF; // 清空显示
+                input_count <= 0;            // 清空输入计数
+            end
+            4'hD: begin // D键进入修改密码模式
+                if(current_state == UNLOCKED) begin
+                    change_password_mode <= 1'b1; // 进入修改密码模式
+                    input_count <= 0;            // 清空输入计数
+                    display_num <= 32'hFFFFFFFF; // 清空显示
+                end
+            end
+            4'hE: begin // *键显示密码
+                if(current_state == UNLOCKED) begin
+                    input_count <= 0;            // 清空输入计数
+                    display_num <= password; // 显示密码
+                end
+            end
+            default: ; // 其他按键无操作
+        endcase
+    end else if(!key_valid) begin
+        if(count4 == 1) begin
+            if(error_count == 32'h1 || error_count == 32'h2) begin // 前2次密码错误
+                if(counter4 < COUNT_5S) begin // 密码错误报警5s
+                    counter4 <= counter4 + 1; // 计数LED4
+                    counter41 <= counter41 + 1; // 计数LED4闪烁
+                    if(counter41 >= FLASH_PERIOD1) begin
+                        led4 <= ~led4; // 闪烁LED4
+                        counter41 <= 0; // 重置LED4闪烁计数器
+                    end
+                end else if(counter4 >= COUNT_5S) begin
+                    count4 <= 0; // 结束计数LED4
+                    led4 <= 0; // 熄灭LED4
+                end
+            end else if(error_count == 32'h3) begin // 3次密码错误
+                if(counter4 < COUNT_30S) begin // 密码错误报警30s
+                    counter4 <= counter4 + 1; // 计数LED4
+                    counter41 <= counter41 + 1; // 计数LED4闪烁
+                    if(counter41 >= FLASH_PERIOD1) begin
+                        led4 <= ~led4; // 闪烁LED4
+                        counter41 <= 0; // 重置LED4闪烁计数器
+                    end
+                end else if(counter4 >= COUNT_30S) begin
+                    count4 <= 0; // 结束计数LED4
+                    led4 <= 0; // 熄灭LED4
+                end
+            end else if(error_count >= 32'h3 && error_count < 32'h3F) begin // 3~63次密码错误
+                if(counter4 < COUNT_30S) begin // 密码错误报警30s
+                    counter4 <= counter4 + 1; // 计数LED4
+                    counter41 <= counter41 + 1; // 计数LED4闪烁
+                    if(counter4 < COUNT_1S) begin // 1s内闪烁
+                        if(counter41 >= FLASH_PERIOD1) begin
+                            led4 <= ~led4; // 闪烁LED4
+                            counter41 <= 0; // 重置LED4闪烁计数器
+                        end
+                    end else if(counter4 >= COUNT_1S && counter4 < 2 * COUNT_1S) begin // 1s后熄灭
+                        led4 <= 0; // 熄灭LED4
+                    end else if(counter4 >= 2 * COUNT_1S) begin // 2s后重置
+                        counter4 <= 0; // 重置计数LED4
+                        counter41 <= 0; // 重置LED4闪烁计数器
+                    end
+                end
+            end
+        end
+        if(count5 == 1 && counter5 < COUNT_30S) begin // 未解锁报警倒计时开始
+            counter5 <= counter5 + 1; // 计数LED5
+        end else if(count5 == 1 && counter5 >= COUNT_30S) begin
+            count5 <= count5 + 1; // LED5
+            counter5 <= 0; // 重置LED5计数器
+        end else if(count5 == 2 && counter5 < COUNT_30S) begin // 超过10s未解锁开机报警
+            counter5 <= counter5 + 1; // 计数LED5
+            counter51 <= counter51 + 1; // 计数LED5闪烁
+            if(counter51 >= FLASH_PERIOD2) begin
+                led5 <= ~led5; // 闪烁LED5
+                counter51 <= 0; // 重置LED5闪烁计数器
+            end
+        end else if(count5 == 2 && counter5 >= COUNT_30S) begin
+            count5 <= 0; // 结束计数LED5
+            led5 <= 0; // 熄灭LED5  
+        end
+    end
+end
+
+// 更新显示任务
+task update_display;
+    input [3:0] num;
+    begin
+        display_num <= {display_num[27:0], num}; // 将新输入的数字放入显示
+        input_count <= input_count + 1;          // 增加输入计数
+    end
+endtask
+
+// LED状态指示
+assign led1 = (current_state == UNLOCKED) ? 1'b1 : 1'b0; // 解锁时LED1亮
+assign led2 = (current_state == LOCKED) ? 1'b1 : 1'b0;   // 锁定时LED2亮
+assign led3 = change_password_mode;                       // 修改密码模式时LED3亮
+
+endmodule
